@@ -1,18 +1,12 @@
-import adapter from "@sveltejs/adapter-node"; // Chuyển từ adapter-auto sang adapter-node
+import adapter from "@sveltejs/adapter-node";
+import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-  compilerOptions: {
-    runes: ({ filename }) =>
-      filename.split(/[/\\]/).includes("node_modules") ? undefined : true,
-  },
+  preprocess: vitePreprocess(),
+
   kit: {
-    adapter: adapter({
-      // Tùy chọn cho adapter-node
-      out: "build",
-      precompress: false,
-      envPrefix: "",
-    }),
+    adapter: adapter(),
   },
 };
 
