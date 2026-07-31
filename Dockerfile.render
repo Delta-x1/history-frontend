@@ -1,18 +1,24 @@
-FROM node:20-bullseye AS build
+# Build stage - dùng image mới hơn
+FROM node:20-bookworm AS build
 
 WORKDIR /app
+
 COPY package*.json ./
 RUN npm install
+
 COPY . .
 RUN npm run build
 
-FROM node:20-bullseye AS production
+# Production stage
+FROM node:20-bookworm AS production
 
 WORKDIR /app
+
 COPY --from=build /app/build ./build
 COPY --from=build /app/package*.json ./
+COPY --from=build /app/.svelte-kit ./.svelte-kit
+
 RUN npm install --omit=dev
 
 EXPOSE 3000
-
-CMD ["node", "build"]
+CMD ["node", "build/index.js"]
