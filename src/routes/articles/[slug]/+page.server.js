@@ -1,7 +1,7 @@
 import { error } from "@sveltejs/kit";
 import { env } from "$env/dynamic/private";
 
-const STRAPI_URL = env.PUBLIC_STRAPI_URL ?? "http://strapi:1337";
+const STRAPI_URL = env.STRAPI_INTERNAL_URL ?? "http://strapi:1337";
 
 export async function load({ params, fetch }) {
   const res = await fetch(
